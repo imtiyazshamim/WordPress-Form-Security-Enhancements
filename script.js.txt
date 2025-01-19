@@ -1,0 +1,32 @@
+////
+document.addEventListener('wpcf7submit', function(event) {
+    var inputs = event.detail.inputs;
+    var urlPattern = /https?:\/\/[^\s]+/i;
+    for (var i = 0; i < inputs.length; i++) {
+        if (urlPattern.test(inputs[i].value)) {
+            alert('URLs are not allowed in the form fields.');
+            event.preventDefault();
+            return false;
+        }
+    }
+ }, false);
+ 
+ /////
+ 
+ ////
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('form.wpcf7-form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            // Select all input and textarea fields in the form
+            var fields = form.querySelectorAll('input[type="text"], textarea');
+
+            fields.forEach(function(field) {
+                // Remove HTML tags
+                field.value = field.value.replace(/<[^>]*>?/gm, '');
+
+                // Remove URLs
+                field.value = field.value.replace(/\bhttps?:\/\/\S+/gi, '');
+            });
+        });
+    });
+});

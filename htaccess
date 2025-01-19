@@ -1,0 +1,92 @@
+# BEGIN WordPress
+# The directives (lines) between "BEGIN WordPress" and "END WordPress" are
+# dynamically generated, and should only be modified via WordPress filters.
+# Any changes to the directives between these markers will be overwritten.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+
+
+# for site security
+
+<IfModule mod_headers.c>
+        Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+
+#Protecting the wp-config.php File
+<files wp-config.php>
+        order allow,deny
+        deny from all
+</files>
+
+# Block WordPress xmlrpc.php requests
+<Files xmlrpc.php>
+        order deny,allow
+        deny from all
+        allow from 000.00.000.000
+</Files>
+
+# Set WordPress X-XSS-Protection
+<IfModule mod_headers.c>
+        Header set X-XSS-Protection "1"
+</IfModule>
+
+# Enable WordPress X-Content-Type-Options
+<ifModule mod_headers.c>
+        Header set X-Content-Type-Options nosniff
+</ifModule>
+
+# Enable WordPress Strict-Transport-Security
+<ifModule mod_headers.c>
+        Header set Strict-Transport-Security "max-age=31536000" env=HTTPS
+</ifModule>
+
+# Enable WordPress Content-Security-Policy
+<ifModule mod_headers.c>
+#Header set Content-Security-Policy "default-src 'self' data:; object-src 'none'; child-src 'self'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content"
+</ifModule>
+
+# Enable WordPress set Permissions-Policy
+<ifModule mod_headers.c>
+        Header set Permissions-Policy "accelerometer=Origin(), autoplay=(), camera=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), usb=()"
+</ifModule>
+# php -- END cPanel-generated handler, do not edit
+
+# Backup Migration START
+  <IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteRule .* - [E=noabort:1]
+    RewriteRule .* - [E=noconntimeout:1]
+
+  </IfModule>
+  <IfModule mod_env>
+
+    SetEnv noabort 1
+
+  </IfModule>
+# Backup Migration END
+
+#plugin version hide.......29-05
+# Deny access to readme.html and similar files
+<FilesMatch "^(readme\.html|license\.txt|wp-config\.php|debug\.log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ! --- disble feeds --- !
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/feed [NC]
+RewriteRule ^ %1 [R=403,L]
+</IfModule>
