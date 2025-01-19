@@ -1,9 +1,6 @@
 # WordPress-Form-Security-Enhancements
 Enhance the security of WordPress forms and configurations with this collection of code snippets and best practices. Includes input validation, .htaccess security rules, client-side scripting, and WordPress configuration optimizations to protect against common vulnerabilities.
 
-
-# WordPress Form Security Enhancements
-
 This repository provides essential steps to secure WordPress forms and configurations using cPanel. Follow these steps to apply the provided security code to your WordPress installation.
 
 ## Steps to Apply Security Code Using cPanel
